@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class Narrator</title>
+  <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+
+<!-- Header com o logo e o menu -->
+<header>
+    <div class="logo">
+        <!-- Insira o logotipo da Class Solutions aqui -->
+         <img src="../static/images/logo.png" alt="">
+        <h1>Class Narrator</h1>
+    </div>
+</header>
+
+
+  <div class="container">
+    <h2>Conversor de Texto para Áudio</h2>
+
+    <form id="text-to-speech-form">
+      <input type="text" name="titulo" placeholder="Digite o título do áudio..." required />
+      <textarea name="texto" placeholder="Digite o texto aqui..." required></textarea>
+      <button type="submit">Converter para Áudio</button>
+    </form>
+
+    <div class="message" id="message"></div>
+    <audio id="audio-preview" controls style="display:none;"></audio>
+
+    <!-- Lista de áudios gerados -->
+    <div class="audio-list">
+      <h3>Lista de Áudios Gerados</h3>
+      <ul>
+        {% for audio in audio_files %}
+        <li class="audio-item">
+          <a href="{{ url_for('static', filename=audio) }}" target="_blank">{{ audio.split('/')[-1] }}</a>
+          <audio controls>
+            <source src="{{ url_for('static', filename=audio) }}" type="audio/mp3">
+            Seu navegador não suporta o elemento de áudio.
+          </audio>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("text-to-speech-form");
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      const formData = new FormData(form);
+      const titulo = document.querySelector("input[name='titulo']").value;
+
+      const response = await fetch("/convert", {
+        method: "POST",
+        body: formData
+      });
+
+      const messageDiv = document.getElementById("message");
+      const audioPlayer = document.getElementById("audio-preview");
+
+      if (response.ok) {
+        const data = await response.json();
+        const audioUrl = data.audio_url;
+
+        // Mostrar mensagem de sucesso
+        messageDiv.innerHTML = "Áudio '" + titulo + "' gerado com sucesso! Ouça abaixo:";
+
+        // Exibir o player de áudio com o arquivo gerado
+        audioPlayer.src = audioUrl;
+        audioPlayer.style.display = 'block';  // Mostrar o player
+        audioPlayer.load();  // Recarregar o player de áudio com o novo arquivo
+      } else {
+        messageDiv.innerHTML = "Erro ao converter texto em áudio.";
+        audioPlayer.style.display = 'none';  // Ocultar o player em caso de erro
+      }
+    });
+  </script>
+</body>
+</html>
