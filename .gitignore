@@ -1,0 +1,7 @@
+# Ignorar a pasta do ambiente virtual
+venv/
+
+
+# Arquivos de configuração do VSCode (caso use)
+.vscode/
+.vs

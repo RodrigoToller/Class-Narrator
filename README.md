@@ -11,17 +11,16 @@
 
 ## 🛠️ Tecnologias Utilizadas
 
-- **Python 3.12**: Linguagem principal do projeto.
+- **Python 3.9.0**: Linguagem principal do projeto.
 - **Flask**: Framework web para a criação do backend.
 - **gTTS (Google Text-to-Speech)**: Biblioteca Python para converter texto em áudio.
 - **HTML5, CSS3, e JavaScript**: Para a interface do usuário (frontend).
-- **MediaElement.js**: Biblioteca JavaScript usada para personalizar os players de áudio.
 
 ## 📦 Pré-requisitos
 
 Antes de começar, você vai precisar ter instalado em sua máquina:
 
-- **Python 3.12**: [Download Python](https://www.python.org/downloads/)
+- **Python 3.9.0**: [Download Python](https://www.python.org/downloads/)
 - **pip**: O gerenciador de pacotes do Python. Ele geralmente vem junto com o Python, mas você pode verificar a instalação com o comando:
 
 ```bash
